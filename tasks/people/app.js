@@ -1,7 +1,8 @@
 import { resolveModelForProvider } from "../../config.js";
 
 import { filterCandidates } from "./filter-candidates.js";
-import { tagPeopleByJob } from "./tag-people-by-job.js";
+// import { tagPeopleByJob } from "./tag-people-by-job.js";
+import { tagPeopleByJobStructured } from "./tag-people-by-job-structured.js";
 import { submitTask } from "../../utils/submit-task.js";
 
 const TASK_NAME = "people";
@@ -11,7 +12,11 @@ async function main() {
   try {
     const filteredCandidates = await filterCandidates();
 
-    const taggedCandidates = await tagPeopleByJob(MODEL, filteredCandidates);
+    // const taggedCandidates = await tagPeopleByJob(MODEL, filteredCandidates);
+    const taggedCandidates = await tagPeopleByJobStructured(
+      MODEL,
+      filteredCandidates,
+    );
 
     const answer = taggedCandidates
       .filter((candidate) => candidate?.tags.includes("transport"))
