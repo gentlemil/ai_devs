@@ -1,0 +1,25 @@
+# Compiled Output
+/dist
+/tmp
+/out-tsc
+
+# Dependencies
+/node_modules
+
+# IDEs and Editors
+/.idea
+.project
+.file-ops
+.classpath
+.c9/
+.settings/
+*.sublime-workspace
+*.launch
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+.env
+/notes
