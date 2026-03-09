@@ -1,5 +1,6 @@
 import {
   AI_API_KEY,
+  API_FORMAT,
   EXTRA_API_HEADERS,
   RESPONSES_API_ENDPOINT,
 } from "../../config.js";
@@ -20,6 +21,27 @@ export async function tagPeopleByJob(model, people) {
   Example format:
   { "results": [{ "name": "Jan", "surname": "Kowalski", "born": 1990, "gender": "M", "city": "Grudziądz", "tags": ["transport", "praca z pojazdami"] }] }`;
 
+  const requestBody =
+    API_FORMAT === "chat"
+      ? {
+          model,
+          messages: [
+            { role: "system", content: prompt },
+            { role: "user", content: JSON.stringify(people) },
+          ],
+          response_format: { type: "json_object" },
+        }
+      : {
+          model,
+          input: [
+            { role: "system", content: prompt },
+            { role: "user", content: JSON.stringify(people) },
+          ],
+          text: {
+            format: { type: "json_object" },
+          },
+        };
+
   const response = await fetch(RESPONSES_API_ENDPOINT, {
     method: "POST",
     headers: {
@@ -27,16 +49,7 @@ export async function tagPeopleByJob(model, people) {
       Authorization: `Bearer ${AI_API_KEY}`,
       ...EXTRA_API_HEADERS,
     },
-    body: JSON.stringify({
-      model: model,
-      input: [
-        { role: "system", content: prompt },
-        { role: "user", content: JSON.stringify(people) },
-      ],
-      text: {
-        format: { type: "json_object" },
-      },
-    }),
+    body: JSON.stringify(requestBody),
   });
 
   const data = await response.json();

@@ -7,7 +7,7 @@ const ROOT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_ENV_FILE = path.join(ROOT_DIR, ".env");
 const RESPONSES_ENDPOINTS = {
   openai: "https://api.openai.com/v1/responses",
-  openrouter: "https://openrouter.ai/api/v1/responses",
+  openrouter: "https://openrouter.ai/api/v1/chat/completions",
 };
 const VALID_PROVIDERS = new Set(["openai", "openrouter"]);
 
@@ -80,6 +80,11 @@ export const AI_PROVIDER = resolveProvider();
 export const AI_API_KEY =
   AI_PROVIDER === "openai" ? OPENAI_API_KEY : OPENROUTER_API_KEY;
 export const RESPONSES_API_ENDPOINT = RESPONSES_ENDPOINTS[AI_PROVIDER];
+/**
+ * "responses" → OpenAI Responses API format (input/text.format)
+ * "chat"      → Chat Completions format (messages/response_format), used by OpenRouter
+ */
+export const API_FORMAT = AI_PROVIDER === "openai" ? "responses" : "chat";
 export const EXTRA_API_HEADERS =
   AI_PROVIDER === "openrouter"
     ? {
