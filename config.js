@@ -91,6 +91,7 @@ export const EXTRA_API_HEADERS =
           : {}),
       }
     : {};
+export const AI_DEVS_KEY = process.env.AI_DEVS_KEY?.trim() ?? "";
 
 export const resolveModelForProvider = (model) => {
   if (typeof model !== "string" || !model.trim()) {
