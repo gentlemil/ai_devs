@@ -29,6 +29,8 @@ async function main() {
         tags: candidate.tags,
       }));
 
+    console.log(answer);
+
     await submitTask(TASK_NAME, answer);
   } catch (error) {
     console.error("sth went wrong, try again later", error);
